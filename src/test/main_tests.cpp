@@ -50,15 +50,15 @@ BOOST_AUTO_TEST_CASE(subsidy_limit_test)
     const auto chainParams = CreateChainParams(CBaseChainParams::MAIN);
     CAmount nSum = 0;
 
-    // SUGAR-HALVING
+    // CLOCK-HALVING
     // BTC: (was 14000000 = 21000000/1.5)
     for (int nHeight = 0; nHeight < 1073741824/1.5; nHeight += 1000) { // TotalSupply/1.5 = 1073741824/1.5 = 715827882.6666666
         CAmount nSubsidy = GetBlockSubsidy(nHeight, chainParams->GetConsensus());
-        BOOST_CHECK(nSubsidy <= 42.94967296 * COIN); // SUGAR-HALVING // 2^32/COIN = 42.94967296 (was 50)
+        BOOST_CHECK(nSubsidy <= 42.94967296 * COIN); // CLOCK-HALVING // 2^32/COIN = 42.94967296 (was 50)
         nSum += nSubsidy * 1000;
         BOOST_CHECK(MoneyRange(nSum));
     }
-    // SUGAR-HALVING
+    // CLOCK-HALVING
     // BTC: (was 2099999997690000ULL)
     // Total Supply in COINs (in theory):	1073741824
     // Total Supply in COINs (in actual):	1073741823.87500000

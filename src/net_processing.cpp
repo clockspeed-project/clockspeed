@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
-// Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
+// Copyright (c) 2018-2020 The Clockspeed Yumekawa developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -34,7 +34,7 @@
 #include <memory>
 
 #if defined(NDEBUG)
-# error "Sugarchain cannot be compiled without assertions."
+# error "Clockspeed cannot be compiled without assertions."
 #endif
 
 std::atomic<int64_t> nTimeBestReceived(0); // Used only to inform the wallet of when we last received a block
@@ -1397,7 +1397,7 @@ bool static ProcessHeadersMessage(CNode *pfrom, CConnman *connman, const std::ve
             nodestate->m_last_block_announcement = GetTime();
         }
 
-        // FIXME.SUGAR
+        // FIXME.CLOCK
         // IBD: disable additional download during IBD, due to too much traffic
         /*
         if (nCount == MAX_HEADERS_RESULTS) {
@@ -3130,7 +3130,7 @@ void PeerLogicValidation::CheckForStaleTipAndEvictPeers(const Consensus::Params 
         // Check whether our tip is stale, and if so, allow using an extra
         // outbound peer
         if (TipMayBeStale(consensusParams)) {
-            if (!IsInitialBlockDownload()) { // FIXME.SUGAR // IBD: do not print this connection log during IBD
+            if (!IsInitialBlockDownload()) { // FIXME.CLOCK // IBD: do not print this connection log during IBD
                 LogPrintf("Potential stale tip detected, will try using extra outbound peer (last tip update: %d seconds ago)\n", time_in_seconds - g_last_tip_update);
             }
             connman->SetTryNewOutboundPeer(true);
@@ -3569,7 +3569,7 @@ bool PeerLogicValidation::SendMessages(CNode* pto, std::atomic<bool>& interruptM
             QueuedBlock &queuedBlock = state.vBlocksInFlight.front();
             int nOtherPeersWithValidatedDownloads = nPeersWithValidatedDownloads - (state.nBlocksInFlightValidHeaders > 0);
 
-            // FIXME.SUGAR // SURE?
+            // FIXME.CLOCK // SURE?
             // 120x faster than bitcoin
             // (consensusParams.nPowTargetSpacing * 120) = 600 seconds = 10 minutes (BTC)
 

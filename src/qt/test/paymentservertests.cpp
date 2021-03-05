@@ -197,7 +197,7 @@ void PaymentServerTests::paymentServerTests()
     // Extract address and amount from the request
     QList<std::pair<CScript, CAmount> > sendingTos = r.paymentRequest.getPayTo();
 
-    // FIXME.SUGAR
+    // FIXME.CLOCK
     // BEGIN - DEBUG
     printf( "\n\n\n" );
     printf( "%s =\n", "src/qt/test/paymentrequestdata.h/paymentrequest5_cert2_BASE64" );

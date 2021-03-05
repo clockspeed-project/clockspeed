@@ -82,14 +82,14 @@
 // Application startup time (used for uptime calculation)
 const int64_t nStartupTime = GetTime();
 
-const char * const BITCOIN_CONF_FILENAME = "sugarchain.conf";
-const char * const BITCOIN_PID_FILENAME = "sugarchaind.pid";
+const char * const BITCOIN_CONF_FILENAME = "clockspeed.conf";
+const char * const BITCOIN_PID_FILENAME = "clockspeedd.pid";
 const char * const DEFAULT_DEBUGLOGFILE = "debug.log";
 
 ArgsManager gArgs;
 bool fPrintToConsole = false;
 bool fPrintToDebugLog = true;
-bool fPruneDebugLog = false; // FIXME.SUGAR // prune debug.log
+bool fPruneDebugLog = false; // FIXME.CLOCK // prune debug.log
 
 bool fLogTimestamps = DEFAULT_LOGTIMESTAMPS;
 bool fLogTimeMicros = DEFAULT_LOGTIMEMICROS;
@@ -374,7 +374,7 @@ int LogPrintStr(const std::string &str)
             ret = FileWriteStr(strTimestamped, fileout);
         }
 
-        // FIXME.SUGAR // prune debug.log
+        // FIXME.CLOCK // prune debug.log
         // BEGIN - PRUNE DEBUG.LOG
         // If debug.log is over 10 MB (10*1000*1000), shrink to 1 MB (1*1000*1000)
         // see "void ShrinkDebugFile()"
@@ -598,7 +598,7 @@ static std::string FormatException(const std::exception* pex, const char* pszThr
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(nullptr, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "sugarchain";
+    const char* pszModule = "clockspeed";
 #endif
     if (pex)
         return strprintf(
@@ -623,7 +623,7 @@ fs::path GetDefaultDataDir()
     // Unix: ~/.bitcoin
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Sugarchain";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Clockspeed";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -633,10 +633,10 @@ fs::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-    return pathRet / "Library/Application Support/Sugarchain";
+    return pathRet / "Library/Application Support/Clockspeed";
 #else
     // Unix
-    return pathRet / ".sugarchain";
+    return pathRet / ".clockspeed";
 #endif
 #endif
 }
@@ -987,7 +987,7 @@ std::string CopyrightHolders(const std::string& strPrefix)
 {
     std::string strCopyrightHolders = strPrefix + strprintf(_(COPYRIGHT_HOLDERS), _(COPYRIGHT_HOLDERS_SUBSTITUTION));
 
-    // FIXME.SUGAR // SURE?
+    // FIXME.CLOCK // SURE?
     // remove duplicated CopyrightHolders on SplashScreen and About
     /*
     // Check for untranslated substitution to make sure Bitcoin Core copyright is not removed by accident

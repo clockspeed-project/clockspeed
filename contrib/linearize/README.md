@@ -32,7 +32,7 @@ JSON-RPC server. Running `bitcoind` or `bitcoin-qt -server` will be sufficient.
 ## Step 1.2:
 Change absolute location in `linearize.cfg`
 
-    input=/home/{USERNAME}/.sugarchain/blocks
+    input=/home/{USERNAME}/.clockspeed/blocks
     output_file=/home/{USERNAME}/Desktop/bootstrap.dat
 
 ## Step 1.3: Check outputs
@@ -84,6 +84,6 @@ addition to reaching a maximum file size (`max_out_sz`).
     $ rm SHA256SUMS && cat SHA256SUMS.asc # rename to asc
     ... # release
 
-* Release following files at https://github.com/sugarchain-project/bootstrap/releases
+* Release following files at https://github.com/clockspeed-project/bootstrap/releases
   - bootstrap.dat.zip
   - SHA256SUMS.asc

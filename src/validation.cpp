@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
 // Copyright (c) 2013-2019 Alexander Peslyak - Yespower 1.0.1
-// Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
+// Copyright (c) 2018-2020 The Clockspeed Yumekawa developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -50,7 +50,7 @@
 #include <boost/thread.hpp>
 
 #if defined(NDEBUG)
-# error "Sugarchain cannot be compiled without assertions."
+# error "Clockspeed cannot be compiled without assertions."
 #endif
 
 #define MICRO 0.000001
@@ -240,7 +240,7 @@ CTxMemPool mempool(&feeEstimator);
 /** Constant stuff for coinbase transactions we create: */
 CScript COINBASE_FLAGS;
 
-const std::string strMessageMagic = "Sugarchain Signed Message:\n";
+const std::string strMessageMagic = "Clockspeed Signed Message:\n";
 
 // Internal stuff
 namespace {
@@ -538,7 +538,7 @@ static bool CheckInputsFromMempoolAndCache(const CTransaction& tx, CValidationSt
         if (txFrom) {
             assert(txFrom->GetHash() == txin.prevout.hash);
             assert(txFrom->vout.size() > txin.prevout.n);
-            assert(txFrom->vout[txin.prevout.n] == coin.out);
+           assert(txFrom->vout[txin.prevout.n] == coin.out);
         } else {
             const Coin& coinFromDisk = pcoinsTip->AccessCoin(txin.prevout);
             assert(!coinFromDisk.IsSpent());
@@ -754,7 +754,7 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
         // A transaction that spends outputs that would be replaced by it is invalid. Now
         // that we have the set of all ancestors we can detect this
         // pathological case by making sure setConflicts and setAncestors don't
-        // intersect.
+       // intersect.
         for (CTxMemPool::txiter ancestorIt : setAncestors)
         {
             const uint256 &hashAncestor = ancestorIt->GetTx().GetHash();
@@ -952,7 +952,7 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
         // Remove conflicting transactions from the mempool
         for (const CTxMemPool::txiter it : allConflicting)
         {
-            LogPrint(BCLog::MEMPOOL, "replacing tx %s with %s for %s SUGAR additional fees, %d delta bytes\n",
+            LogPrint(BCLog::MEMPOOL, "replacing tx %s with %s for %s CLOCK additional fees, %d delta bytes\n",
                     it->GetTx().GetHash().ToString(),
                     hash.ToString(),
                     FormatMoney(nModifiedFees - nConflictingFees),
@@ -1151,10 +1151,17 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     if (halvings >= 64)
         return 0;
 
-    // FIXME.SUGAR // SURE?
-    CAmount nSubsidy = 42.94967296 * COIN; // 2^32/COIN = 42.94967296 (was 50)
+    // FIXME.CLOCK // SURE?
+CAmount nSubsidy;
+    if (nHeight <= 100001) {
+         nSubsidy = 96679.71383296 * COIN;
+        }
+     else {
+	 nSubsidy = 42.94967296 * COIN;
+        }
 
-    // DEBUG - SUGAR
+ // 2^32/COIN = 42.94967296 (was 50)
+    // DEBUG - CLOCK
     /*if (halvings == 1) { // no output if it zero(0)
       printf("\n*** BEGIN - DEBUG: GetBlockSubsidy\n");
       printf("nSubsidy & COIN = %ld %ld\n", nSubsidy, COIN);
@@ -1167,7 +1174,7 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
     nSubsidy >>= halvings;
 
-    // DEBUG - SUGAR
+    // DEBUG - CLOCK
     /*if (halvings > 0) {
       printf("\n*** BEGIN - DEBUG: nSubsidy\n");
       printf("halvings & nSubsidy = %d %ld\n", halvings, nSubsidy);
@@ -1743,7 +1750,7 @@ static bool WriteTxIndexDataForBlock(const CBlock& block, CValidationState& stat
 static CCheckQueue<CScriptCheck> scriptcheckqueue(128);
 
 void ThreadScriptCheck() {
-    RenameThread("sugarchain-scriptch");
+    RenameThread("clockspeed-scriptch");
     scriptcheckqueue.Thread();
 }
 
@@ -1922,7 +1929,7 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     // two in the chain that violate it. This prevents exploiting the issue against nodes during their
     // initial block download.
 
-    // FIXME.SUGAR // SURE?
+    // FIXME.CLOCK // SURE?
     bool fEnforceBIP30 = true;
                         //(!pindex->phashBlock) || // Enforce on CreateNewBlock invocations which don't have a hash.
                         //  !((pindex->nHeight==91842 && pindex->GetBlockHash() == uint256S("0x00000000000a4d0a398161ffc163c503763b1f4360639393e0e4c8e300e0caec")) ||
@@ -3048,7 +3055,7 @@ static bool CheckBlockHeader(const CBlockHeader& block, CValidationState& state,
     if (fCheckPOW && !CheckProofOfWork(block.GetPoWHash_cached(), block.nBits, consensusParams))
         return state.DoS(50, false, REJECT_INVALID, "high-hash", false, "proof of work failed");
 
-    // FIXME.SUGAR // check PoW: SKIPPED during downloading headers (IBD)
+    // FIXME.CLOCK // check PoW: SKIPPED during downloading headers (IBD)
     // You can see this log when IBD.
     // This means PoW check during IBD is not actually skipped, but still its checking in another places.
     // What we skipped is only when Downloading headers, but not else. This makes IBD much faster.
@@ -3065,7 +3072,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
     if (block.fChecked)
         return true;
 
-    // FIXME.SUGAR // check PoW: SKIPPED during downloading headers (IBD)
+    // FIXME.CLOCK // check PoW: SKIPPED during downloading headers (IBD)
     // Check that the header is valid (particularly PoW).  This is mostly
     // redundant with the call in AcceptBlockHeader, but when IBD mode, its SKIPPED.
     if (!CheckBlockHeader(block, state, consensusParams, fCheckPOW))
@@ -3229,7 +3236,7 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
             return state.Invalid(false, REJECT_OBSOLETE, strprintf("bad-version(0x%08x)", block.nVersion),
                                  strprintf("rejected nVersion=0x%08x block", block.nVersion));
 
-    // FIXME.SUGAR // SURE?
+    // FIXME.CLOCK // SURE?
     if (block.nVersion < VERSIONBITS_TOP_BITS && IsWitnessEnabled(pindexPrev, consensusParams))
         return state.Invalid(false, REJECT_OBSOLETE, strprintf("bad-version(0x%08x)", block.nVersion),
                                  strprintf("rejected nVersion=0x%08x block", block.nVersion));
@@ -3343,7 +3350,7 @@ bool CChainState::AcceptBlockHeader(const CBlockHeader& block, CValidationState&
             return true;
         }
 
-        // FIXME.SUGAR // check PoW: SKIPPED during downloading headers (IBD)
+        // FIXME.CLOCK // check PoW: SKIPPED during downloading headers (IBD)
         // IBD: do not check PoW (Yespower) during Download headers for performance reason
         if (!IsInitialBlockDownload() && !CheckBlockHeader(block, state, chainparams.GetConsensus()))
             return error("%s: Consensus::CheckBlockHeader: %s, %s", __func__, hash.ToString(), FormatStateMessage(state));

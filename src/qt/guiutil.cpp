@@ -80,7 +80,7 @@ namespace GUIUtil {
 
 QString dateTimeStr(const QDateTime &date)
 {
-    return date.date().toString(Qt::SystemLocaleShortDate) + QString(" ") + date.toString("hh:mm:ss"); // FIXME.SUGAR
+    return date.date().toString(Qt::SystemLocaleShortDate) + QString(" ") + date.toString("hh:mm:ss"); // FIXME.CLOCK
 }
 
 QString dateTimeStr(qint64 nTime)
@@ -129,7 +129,7 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
 #if QT_VERSION >= 0x040700
     // We don't want translators to use own addresses in translations
     // and this is the only place, where this address is supplied.
-    widget->setPlaceholderText(QObject::tr("Enter a Sugarchain address (e.g. %1)").arg(
+    widget->setPlaceholderText(QObject::tr("Enter a Clockspeed address (e.g. %1)").arg(
         QString::fromStdString(DummyAddress(Params()))));
 #endif
     widget->setValidator(new BitcoinAddressEntryValidator(parent));
@@ -148,7 +148,7 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
     // return if URI is not valid or is no bitcoin: URI
-    if(!uri.isValid() || uri.scheme() != QString("sugarchain"))
+    if(!uri.isValid() || uri.scheme() != QString("clockspeed"))
         return false;
 
     SendCoinsRecipient rv;
@@ -212,13 +212,13 @@ bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
     //
     //    Cannot handle this later, because bitcoin:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("sugarchain://", Qt::CaseInsensitive))
+    if(uri.startsWith("clockspeed://", Qt::CaseInsensitive))
     {
         // Fix Length
         // "bitcoin://", 10
         // "litecoin://", 11
-        // "sugarchain://", 13
-        uri.replace(0, 13, "sugarchain:");
+        // "clockspeed://", 13
+        uri.replace(0, 13, "clockspeed:");
     }
     QUrl uriInstance(uri);
     return parseBitcoinURI(uriInstance, out);
@@ -226,7 +226,7 @@ bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 
 QString formatBitcoinURI(const SendCoinsRecipient &info)
 {
-    QString ret = QString("sugarchain:%1").arg(info.address);
+    QString ret = QString("clockspeed:%1").arg(info.address);
     int paramCount = 0;
 
     if (info.amount)
@@ -621,10 +621,10 @@ fs::path static StartupShortcutPath()
 {
     std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Sugarchain.lnk";
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Clockspeed.lnk";
     if (chain == CBaseChainParams::TESTNET) // Remove this special case when CBaseChainParams::TESTNET = "testnet5"
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Sugarchain (testnet).lnk";
-    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Sugarchain (%s).lnk", chain);
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Clockspeed (testnet).lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Clockspeed (%s).lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -719,8 +719,8 @@ fs::path static GetAutostartFilePath()
 {
     std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetAutostartDir() / "sugarchain.desktop";
-    return GetAutostartDir() / strprintf("sugarchain-%s.lnk", chain);
+        return GetAutostartDir() / "clockspeed.desktop";
+    return GetAutostartDir() / strprintf("clockspeed-%s.lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -764,9 +764,9 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
         if (chain == CBaseChainParams::MAIN)
-            optionFile << "Name=Sugarchain\n";
+            optionFile << "Name=Clockspeed\n";
         else
-            optionFile << strprintf("Name=Sugarchain (%s)\n", chain);
+            optionFile << strprintf("Name=Clockspeed (%s)\n", chain);
         optionFile << "Exec=" << pszExePath << strprintf(" -min -testnet=%d -regtest=%d\n", gArgs.GetBoolArg("-testnet", false), gArgs.GetBoolArg("-regtest", false));
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -1006,7 +1006,7 @@ QString formatBytes(uint64_t bytes)
     if(bytes < 1024 * 1024 * 1024)
         return QString(QObject::tr("%1 MB")).arg(bytes / 1024 / 1024);
 
-    // FIXME.SUGAR
+    // FIXME.CLOCK
     // Do not display in GB
     // return QString(QObject::tr("%1 GB")).arg(bytes / 1024 / 1024 / 1024);
     return QString(QObject::tr("%1 MB")).arg(bytes / 1024 / 1024);

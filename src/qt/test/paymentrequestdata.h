@@ -435,7 +435,7 @@ d2hj739GDLz0b5KuJ2SG6VknMRQM976w/m2qlq0ccVGaaZ2zMIGfpzL3p6adwx/5\
 ";
 
 //
-// SUGAR-HALVING
+// CLOCK-HALVING
 // Payment request with amount overflow (amount is set to "(1073741824 * 100000000) + 1" Satoshis)
 // Total Supply in COINs (in theory):	1073741824
 // Total Supply in COINs (in actual):	1073741823.87500000

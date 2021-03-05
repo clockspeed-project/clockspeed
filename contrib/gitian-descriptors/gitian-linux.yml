@@ -1,5 +1,5 @@
 ---
-name: "sugarchain-linux-0.16"
+name: "clockspeed-linux-0.16"
 enable_cache: true
 suites:
 - "trusty"
@@ -30,8 +30,8 @@ packages:
 
 # GITHUB repo select
 remotes:
-- "url": "https://github.com/sugarchain-project/sugarchain.git"
-  "dir": "sugarchain"
+- "url": "https://github.com/clockspeed-project/clockspeed.git"
+  "dir": "clockspeed"
 
 files: []
 script: |
@@ -41,7 +41,7 @@ script: |
   CONFIGFLAGS="--enable-glibc-back-compat --enable-reduce-exports --disable-bench --disable-gui-tests"
   FAKETIME_HOST_PROGS=""
   FAKETIME_PROGS="date ar ranlib nm"
-  YESPOWER_PATH="/home/ubuntu/build/sugarchain/src/crypto/yespower-1.0.1"
+  YESPOWER_PATH="/home/ubuntu/build/clockspeed/src/crypto/yespower-1.0.1"
   YESPOWER_OPTION="-fPIE -Wall -O2 -fomit-frame-pointer"
   HOST_CFLAGS="-O2 -g -I${YESPOWER_PATH} ${YESPOWER_OPTION}"
   HOST_CXXFLAGS="-O2 -g"
@@ -118,7 +118,7 @@ script: |
   chmod +x ${WRAP_DIR}/${prog}
   done
 
-  cd sugarchain
+  cd clockspeed
   BASEPREFIX=`pwd`/depends
   # Build dependencies for each host
   for i in $HOSTS; do
@@ -140,13 +140,13 @@ script: |
   ./autogen.sh
   CONFIG_SITE=${BASEPREFIX}/`echo "${HOSTS}" | awk '{print $1;}'`/share/config.site ./configure --prefix=/
   make dist
-  SOURCEDIST=`echo sugarchain-*.tar.gz`
+  SOURCEDIST=`echo clockspeed-*.tar.gz`
   DISTNAME=`echo ${SOURCEDIST} | sed 's/.tar.*//'`
   # Correct tar file order
   mkdir -p temp
   pushd temp
   tar xf ../$SOURCEDIST
-  find sugarchain-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
+  find clockspeed-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
   popd
 
   # Workaround for tarball not building with the bare tag version (prep)

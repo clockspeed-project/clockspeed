@@ -83,7 +83,7 @@ static const int MAX_SCRIPTCHECK_THREADS = 16;
 static const int DEFAULT_SCRIPTCHECK_THREADS = 0;
 
 /** Number of blocks that can be requested at any given time from a single peer. */
-// FIXME.SUGAR
+// FIXME.CLOCK
 // GetPoWHash_cached
 /** IBD: which sets MAX_BLOCKS_IN_TRANSIT_PER_PEER to be same as MAX_HEADERS_RESULTS.
  *  Without this change, at least in Resistance the block headers download would get unnecessarily

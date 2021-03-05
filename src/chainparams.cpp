@@ -1,6 +1,6 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
-// Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
+// Copyright (c) 2018-2020 The Clockspeed Yumekawa developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -37,7 +37,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     genesis.hashPrevBlock.SetNull();
     genesis.hashMerkleRoot = BlockMerkleRoot(genesis);
 
-    // BEGIN - DEBUG - SUGAR
+    // BEGIN - DEBUG - CLOCK
 
     // MAINNET
     // if (genesis.nTime == 1565881200) {
@@ -123,7 +123,7 @@ public:
     CMainParams() {
         strNetworkID = "main";
 
-        // SUGAR-HALVING
+        // CLOCK-HALVING
         // BTC: (was 21000000)
         // around 2 years = pow(5,8)*32 = 390625*32 = 12500000
         // pow(5,8) * pow(2,32) / COIN = 390625 * 4294967296 / 100000000 = INTEGER (16777216.0)
@@ -140,7 +140,7 @@ public:
         consensus.BIP65Height = 0;  // always on
         consensus.BIP66Height = 0;  // always on
 
-        // GET powLimit by python // FIXME.SUGAR // SURE?
+        // GET powLimit by python // FIXME.CLOCK // SURE?
         /*
         >>> "%d" % 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         '115792089237316195423570985008687907853269984665640564039457584007913129639935'
@@ -155,13 +155,13 @@ public:
         // 0x1f3fffff == 0x003fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.GetCompact()
         consensus.powLimit = uint256S("003fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 
-        // DEBUG - SUGAR
+        // DEBUG - CLOCK
         // printf("\n*** BEGIN - DEBUG: MAIN\n");
         // uint32_t powLimitTOnBits = UintToArith256(consensus.powLimit).GetCompact();
         // printf("powLimitTOnBits = 0x%x\n", powLimitTOnBits);
         // printf("*** END - DEBUG\n");
 
-        // SUGAR-HALVING
+        // CLOCK-HALVING
         // 17 hours = 17*60*60 = 61200 (was two weeks: 14×24×60×60 = 1209600)
         // available: 17*n hours or 17 days possible, because DigiShieldZEC uses n510 (17*n)
         consensus.nPowTargetTimespan = 61200;
@@ -169,7 +169,7 @@ public:
         consensus.nPowAllowMinDifficultyBlocksAfterHeight = boost::none; // DigiShieldZEC
         consensus.nPowAveragingWindow = 510; // DigiShieldZEC // 2550/nPowTargetSpacing(5) = 510
 
-        // DEBUG - SUGAR
+        // DEBUG - CLOCK
         // printf("\n*** BEGIN - DEBUG: MAIN\n");
         // printf("nPowAveragingWindowRatio = %s\n", (maxUint/UintToArith256(consensus.powLimit)).ToString().c_str());
         // printf("nPowAveragingWindow = %ld\n", consensus.nPowAveragingWindow);
@@ -181,20 +181,20 @@ public:
         consensus.nPowMaxAdjustDown = 32; // DigiShieldZEC // 32% adjustment down
         consensus.nPowMaxAdjustUp = 16; // DigiShieldZEC // 16% adjustment up
 
-        // SUGAR-HALVING
-        // 10*60/120 = 5 seconds block time
-        // 120x faster than bitcoin
-        consensus.nPowTargetSpacing = 5;
+        // CLOCK-HALVING
+        // 10*60/600 = 1 seconds block time
+        // 600x faster than bitcoin
+        consensus.nPowTargetSpacing = 1;
 
         consensus.fPowAllowMinDifficultyBlocks = false; // DigiShieldZEC
         consensus.fPowNoRetargeting = false; // DigiShieldZEC
 
-        // SUGAR-HALVING
+        // CLOCK-HALVING
         // 75% of nMinerConfirmationWindow = 61200/5*0.75 = 9180 (was 1916 = 1209600/600*0.95+0.8)
         // 9180/510 = 18 cycles of DigiShieldZEC
         consensus.nRuleChangeActivationThreshold = 9180;
 
-        // SUGAR-HALVING
+        // CLOCK-HALVING
         // nPowTargetTimespan/nPowTargetSpacing = 61200/5 = 12240 (was 2016 = 1209600/600)
         // 12240/510 = 24 cycles of DigiShieldZEC
         consensus.nMinerConfirmationWindow = 12240;
@@ -214,12 +214,12 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // The best chain should have at least this much work.
-        // TODO.SUGAR.UPDATE
+        // TODO.CLOCK.UPDATE
         // getblockhash 6513497 && "chainwork"
-        consensus.nMinimumChainWork = uint256S("00000000000000000000000000000000000000000000000000003f23ef34da28");
+        consensus.nMinimumChainWork = uint256S("0000000000000000000000000000000000000000000000000000000000000000");
 
         // By default assume that the signatures in ancestors of this block are valid.
-        // TODO.SUGAR.UPDATE
+        // TODO.CLOCK.UPDATE
         // getblockhash 6513497 && "hash"
         consensus.defaultAssumeValid = uint256S("855f0c66238bc0246c8ca25cf958283fd49b9fb4b217ddeb518e5ea9f5071b9e");
 
@@ -228,11 +228,11 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0x9f;
-        pchMessageStart[1] = 0xeb;
-        pchMessageStart[2] = 0x4b;
-        pchMessageStart[3] = 0x9d;
-        nDefaultPort = 34230;
+        pchMessageStart[0] = 0x9e;
+        pchMessageStart[1] = 0xee;
+        pchMessageStart[2] = 0x4e;
+        pchMessageStart[3] = 0x9e;
+        nDefaultPort = 5188;
         nPruneAfterHeight = 100000;
 
         // nTime: date -d '2019-08-16 00:00:00 KST' +%s = 1565881200
@@ -240,7 +240,7 @@ public:
         genesis = CreateGenesisBlock(1565881200, 247, 0x1f3fffff, 1, 42.94967296 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
 
-        // DEBUG - SUGAR
+        // DEBUG - CLOCK
         // printf("***\n");
         // printf("genesis.GetPoWHash.MAIN = %s\n", genesis.GetPoWHash().ToString().c_str());
         // printf("genesis.GetHash.MAIN = %s\n", genesis.GetHash().ToString().c_str());
@@ -256,18 +256,17 @@ public:
         // This is fine at runtime as we'll fall back to using them as a oneshot if they dont support the
         // service bits we want, but we should get them updated to support all service bits wanted by any
         // release ASAP to avoid it where possible.
-        vSeeds.emplace_back("1seed.sugarchain.info"); // cryptozeny
-        vSeeds.emplace_back("2seed.sugarchain.info"); // cryptozeny
-        vSeeds.emplace_back("seed.sugarchain.site"); // ROZ
-        vSeeds.emplace_back("seed.sugar.hel.lu"); // Hel
+        vSeeds.emplace_back("1seed.clockspeed.info"); // cryptozeny
+        vSeeds.emplace_back("2seed.clockspeed.info"); // cryptozeny
+        vSeeds.emplace_back("seed.clockspeed.site"); // ROZ
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,63);  // legacy: starting with S (upper)
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,125); // p2sh-segwit: starting with s (lower)
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,28);  // legacy: starting with C (upper)
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,88); // p2sh-segwit: starting with c (lower)
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,128);
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x88, 0xB2, 0x1E};
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x88, 0xAD, 0xE4};
 
-        bech32_hrp = "sugar";   // bech32: starting with sugar1q
+        bech32_hrp = "clock";   // bech32: starting with clock1q
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
 
@@ -278,18 +277,15 @@ public:
         checkpointData = {
             {
                 {1, uint256S("ce8a0df339f2edceb99c5325c95b2b0ae752e29de1193f6113549f0e1cae7c91")},
-                {510, uint256S("f6f565e58812f89d8ea2aca296b9934ea82918f5bd443312af90b0be1465dbd1")},
-                {511, uint256S("ef160a17b4ecc855d00dd6ce051df72f1e690d91811b74c50751ada2e14c5f1a")},
-                {512, uint256S("094afbe86930e4950c601fde563cd2c7b9d050c1b567ad6fe48ae3b15a705ebb")},
-                {900000, uint256S("8a566a463925cf028cb427edb6d4d18a9c1213bf472d9032369c4e45449eb71c")},
-                {2601511, uint256S("e30af0fcf522354f43c3ab2cfb4805d175b1264608b6124eab0b635bdea2589d")}, // 2601511=2601001+510
-                {4422211, uint256S("1f4186606aaab3cb3818f073599602e573476da9fed0b65c9f14646210d6b18f")}, // 4422211=4421701+510
-                {6513497, uint256S("855f0c66238bc0246c8ca25cf958283fd49b9fb4b217ddeb518e5ea9f5071b9e")},
-                // TODO.SUGAR.UPDATE
+                {555, uint256S("a6bd4c70309920a52b1fc781f1f7dade7b7db99c7ca20799ab0657e4529feac3")},
+                {5555, uint256S("9cbfefa9ec5ec7b1c6bc9eec7127f396200e1ddd879bb42d0af07bd4637b796e")},
+		{8888, uint256S("21edffdaad042ee7035c358b7ca287ffa0c2aec4e599fdad64bf39ac620ba735")},
+		{32273, uint256S("7c16c0693efe27a4bf9d12d8ac1998eafed0b9dd8efc338177343115d82bdaa4")},
+		{73803, uint256S("78bde55af4008e9a7c62c4d72a56593e3916ef16af6eecc51281bcc3e5817c44")},
             }
         };
 
-        // TODO.SUGAR.UPDATE
+        // TODO.CLOCK.UPDATE
         chainTxData = ChainTxData{
             // Data from RPC: getchaintxstats 4096 855f0c66238bc0246c8ca25cf958283fd49b9fb4b217ddeb518e5ea9f5071b9e (6513497)
             /* nTime    */ 1599181736,
@@ -307,7 +303,7 @@ public:
     CTestNetParams() {
         strNetworkID = "test";
 
-        // SUGAR-HALVING
+        // CLOCK-HALVING
         // BTC: (was 21000000)
         // around 2 years = pow(5,8)*32 = 390625*32 = 12500000
         // pow(5,8) * pow(2,32) / COIN = 390625 * 4294967296 / 100000000 = INTEGER (16777216.0)
@@ -320,11 +316,11 @@ public:
 
         consensus.BIP16Height = 0;  // always on
         consensus.BIP34Height = 17;
-        consensus.BIP34Hash = uint256S("");   // TODO.SUGAR
+        consensus.BIP34Hash = uint256S("");   // TODO.CLOCK
         consensus.BIP65Height = 0; // always on
         consensus.BIP66Height = 0; // always on
 
-        // GET powLimit by python // FIXME.SUGAR // SURE?
+        // GET powLimit by python // FIXME.CLOCK // SURE?
         /*
         >>> "%d" % 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         '115792089237316195423570985008687907853269984665640564039457584007913129639935'
@@ -339,13 +335,13 @@ public:
         // 0x1f3fffff == 0x003fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.GetCompact()
         consensus.powLimit = uint256S("003fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 
-        // DEBUG - SUGAR
+        // DEBUG - CLOCK
         // printf("\n*** BEGIN - DEBUG: TESTNET\n");
         // uint32_t powLimitTOnBits = UintToArith256(consensus.powLimit).GetCompact();
         // printf("powLimitTOnBits = 0x%x\n", powLimitTOnBits);
         // printf("*** END - DEBUG\n");
 
-        // SUGAR-HALVING
+        // CLOCK-HALVING
         // 17 hours = 17*60*60 = 61200 (was two weeks: 14×24×60×60 = 1209600)
         // available: 17*n hours or 17 days possible, because DigiShieldZEC uses n510 (17*n)
         consensus.nPowTargetTimespan = 61200;
@@ -353,7 +349,7 @@ public:
         consensus.nPowAllowMinDifficultyBlocksAfterHeight = boost::none; // DigiShieldZEC
         consensus.nPowAveragingWindow = 510; // 2550 / nPowTargetSpacing(5) = 510
 
-        // DEBUG - SUGAR
+        // DEBUG - CLOCK
         // printf("\n*** BEGIN - DEBUG: TESTNET\n");
         // printf("nPowAveragingWindowRatio = %s\n", (maxUint/UintToArith256(consensus.powLimit)).ToString().c_str());
         // printf("nPowAveragingWindow = %ld\n", consensus.nPowAveragingWindow);
@@ -365,20 +361,20 @@ public:
         consensus.nPowMaxAdjustDown = 32; // DigiShieldZEC // 32% adjustment down
         consensus.nPowMaxAdjustUp = 16; // DigiShieldZEC // 16% adjustment up
 
-        // SUGAR-HALVING
-        // 10*60/120 = 5 seconds block time
-        // 120x faster than bitcoin
-        consensus.nPowTargetSpacing = 5;
+        // CLOCK-HALVING
+        // 10*60/600 = 5 seconds block time
+        // 600x faster than bitcoin
+        consensus.nPowTargetSpacing = 1;
 
         consensus.fPowAllowMinDifficultyBlocks = false; // DigiShieldZEC
         consensus.fPowNoRetargeting = false; // DigiShieldZEC
 
-        // SUGAR-HALVING
+        // CLOCK-HALVING
         // 75% of nMinerConfirmationWindow = 61200/5*0.75 = 9180 (was 1916 = 1209600/600*0.95+0.8)
         // 9180/510 = 18 cycles of DigiShieldZEC
         consensus.nRuleChangeActivationThreshold = 9180;
 
-        // SUGAR-HALVING
+        // CLOCK-HALVING
         // nPowTargetTimespan/nPowTargetSpacing = 61200/5 = 12240 (was 2016 = 1209600/600)
         // 12240/510 = 24 cycles of DigiShieldZEC
         consensus.nMinerConfirmationWindow = 12240;
@@ -398,20 +394,20 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // The best chain should have at least this much work.
-        // TODO.SUGAR.UPDATE
+        // TODO.CLOCK.UPDATE
         // getblockhash 4000000 && "chainwork" (testnet)
         consensus.nMinimumChainWork = uint256S("000000000000000000000000000000000000000000000000000000014d9bf048");
 
         // By default assume that the signatures in ancestors of this block are valid.
-        // TODO.SUGAR.UPDATE
+        // TODO.CLOCK.UPDATE
         // getblockhash 4000000 && "hash" (testnet)
         consensus.defaultAssumeValid = uint256S("bc05c2d5e81785f287cd58a798b64467cff35c8ef2bbe8062d8420eeb86f4056");
 
-        pchMessageStart[0] = 0xb0;
-        pchMessageStart[1] = 0x11;
-        pchMessageStart[2] = 0x90;
-        pchMessageStart[3] = 0x70;
-        nDefaultPort = 44230;
+        pchMessageStart[0] = 0xbe;
+        pchMessageStart[1] = 0x1e;
+        pchMessageStart[2] = 0x9e;
+        pchMessageStart[3] = 0x7e;
+        nDefaultPort = 5189;
         nPruneAfterHeight = 1000;
 
         // nTime: date -d '2019-08-16 00:00:01 UTC' +%s = 1565913601
@@ -419,7 +415,7 @@ public:
         genesis = CreateGenesisBlock(1565913601, 490, 0x1f3fffff, 1, 42.94967296 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
 
-        // DEBUG - SUGAR
+        // DEBUG - CLOCK
         // printf("***\n");
         // printf("genesis.GetPoWHash.TESTNET = %s\n", genesis.GetPoWHash().ToString().c_str());
         // printf("genesis.GetHash.TESTNET = %s\n", genesis.GetHash().ToString().c_str());
@@ -441,7 +437,7 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x35, 0x87, 0xCF};
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x94};
 
-        bech32_hrp = "tugar";     // bech32: starting with tugar1q
+        bech32_hrp = "tlock";     // bech32: starting with tlock1q
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
 
@@ -461,7 +457,7 @@ public:
             }
         };
 
-        // TODO.SUGAR.UPDATE
+        // TODO.CLOCK.UPDATE
         chainTxData = ChainTxData{
             // Data from RPC: getchaintxstats 4096 bd83debccee1bef17340539beff64ad3feab03c25e5d91969cf5418b8e2fe5a7 (780811)
             /* nTime    */ 1598648664,
@@ -480,10 +476,10 @@ public:
     CRegTestParams() {
         strNetworkID = "regtest";
 
-        // SUGAR-HALVING // (was same as BTC)
+        // CLOCK-HALVING // (was same as BTC)
         consensus.nSubsidyHalvingInterval = 150;
 
-        // DEBUG - SUGAR
+        // DEBUG - CLOCK
         // printf("nSubsidyHalvingInterval = %d\n", consensus.nSubsidyHalvingInterval);
 
         consensus.BIP16Height = 0; // always enforce P2SH BIP16 on regtest
@@ -492,7 +488,7 @@ public:
         consensus.BIP65Height = 1351; // BIP65 activated on regtest (Used in rpc activation tests)
         consensus.BIP66Height = 1251; // BIP66 activated on regtest (Used in rpc activation tests)
 
-        // GET powLimit by python // FIXME.SUGAR // SURE?
+        // GET powLimit by python // FIXME.CLOCK // SURE?
         /*
         >>> "%d" % 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         '115792089237316195423570985008687907853269984665640564039457584007913129639935'
@@ -507,13 +503,13 @@ public:
         // 0x200f0f0f == 0x0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f.GetCompact()
         consensus.powLimit = uint256S("0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f");
 
-        // DEBUG - SUGAR
+        // DEBUG - CLOCK
         // printf("\n*** BEGIN - DEBUG: REGTEST\n");
         // uint32_t powLimitTOnBits = UintToArith256(consensus.powLimit).GetCompact();
         // printf("powLimitTOnBits = 0x%x\n", powLimitTOnBits);
         // printf("*** END - DEBUG\n");
 
-        // SUGAR-HALVING
+        // CLOCK-HALVING
         // 17 hours = 17*60*60 = 61200 (was two weeks: 14×24×60×60 = 1209600)
         // available: 17*n hours or 17 days possible, because DigiShieldZEC uses n510 (17*n)
         consensus.nPowTargetTimespan = 61200;
@@ -521,7 +517,7 @@ public:
         consensus.nPowAllowMinDifficultyBlocksAfterHeight = boost::none; // DigiShieldZEC
         consensus.nPowAveragingWindow = 17; // DigiShieldZEC // 85/nPowTargetSpacing(5) = 17
 
-        // DEBUG - SUGAR
+        // DEBUG - CLOCK
         // printf("\n*** BEGIN - DEBUG: REGTEST\n");
         // printf("nPowAveragingWindowRatio = %s\n", (maxUint/UintToArith256(consensus.powLimit)).ToString().c_str());
         // printf("nPowAveragingWindow = %ld\n", consensus.nPowAveragingWindow);
@@ -533,18 +529,18 @@ public:
         consensus.nPowMaxAdjustDown = 0; // DigiShieldZEC // Turn off adjustment down
         consensus.nPowMaxAdjustUp = 0; // DigiShieldZEC // Turn off adjustment up
 
-        // SUGAR-HALVING
+        // CLOCK-HALVING
         // 10*60/120 = 5 seconds block time
         // 120x faster than bitcoin
-        consensus.nPowTargetSpacing = 5;
+        consensus.nPowTargetSpacing = 1;
 
         consensus.fPowAllowMinDifficultyBlocks = true; // DigiShieldZEC
         consensus.fPowNoRetargeting = true; // DigiShieldZEC
 
-        // SUGAR-HALVING // (was same as BTC)
+        // CLOCK-HALVING // (was same as BTC)
         consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains
 
-        // SUGAR-HALVING // (was same as BTC)
+        // CLOCK-HALVING // (was same as BTC)
         consensus.nMinerConfirmationWindow = 144; // Faster than normal for regtest (144 instead of 2016)
 
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
@@ -576,7 +572,7 @@ public:
 
         consensus.hashGenesisBlock = genesis.GetHash();
 
-        // DEBUG - SUGAR
+        // DEBUG - CLOCK
         // printf("\n*** BEGIN - DEBUG: REGTEST\n");
         // printf("genesis.GetPoWHash.REGTEST = %s\n", genesis.GetPoWHash().ToString().c_str());
         // printf("genesis.GetHash.REGTEST = %s\n", genesis.GetHash().ToString().c_str());

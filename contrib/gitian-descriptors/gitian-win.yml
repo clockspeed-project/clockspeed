@@ -1,5 +1,5 @@
 ---
-name: "sugarchain-win-0.16"
+name: "clockspeed-win-0.16"
 enable_cache: true
 suites:
 - "trusty"
@@ -24,8 +24,8 @@ packages:
 
 # GITHUB repo select
 remotes:
-- "url": "https://github.com/sugarchain-project/sugarchain.git"
-  "dir": "sugarchain"
+- "url": "https://github.com/clockspeed-project/clockspeed.git"
+  "dir": "clockspeed"
 
 files: []
 script: |
@@ -35,7 +35,7 @@ script: |
   CONFIGFLAGS="--enable-reduce-exports --disable-bench --disable-gui-tests ${WIN_BITCOIN_CONFIG}"
   FAKETIME_HOST_PROGS="g++ ar ranlib nm windres strip objcopy"
   FAKETIME_PROGS="date makensis zip"
-  YESPOWER_PATH="/home/ubuntu/build/sugarchain/src/crypto/yespower-1.0.1"
+  YESPOWER_PATH="/home/ubuntu/build/clockspeed/src/crypto/yespower-1.0.1"
   YESPOWER_OPTION="-fPIE -Wall -O2 -fomit-frame-pointer"
   HOST_CFLAGS="-O2 -g -I${YESPOWER_PATH} ${YESPOWER_OPTION}"
   HOST_CXXFLAGS="-O2 -g"
@@ -107,7 +107,7 @@ script: |
   create_per-host_linker_wrapper "2000-01-01 12:00:00"
   export PATH=${WRAP_DIR}:${PATH}
 
-  cd sugarchain
+  cd clockspeed
   BASEPREFIX=`pwd`/depends
   # Build dependencies for each host
   for i in $HOSTS; do
@@ -125,14 +125,14 @@ script: |
   ./autogen.sh
   CONFIG_SITE=${BASEPREFIX}/`echo "${HOSTS}" | awk '{print $1;}'`/share/config.site ./configure --prefix=/
   make dist
-  SOURCEDIST=`echo sugarchain-*.tar.gz`
+  SOURCEDIST=`echo clockspeed-*.tar.gz`
   DISTNAME=`echo ${SOURCEDIST} | sed 's/.tar.*//'`
 
   # Correct tar file order
   mkdir -p temp
   pushd temp
   tar xf ../$SOURCEDIST
-  find sugarchain-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
+  find clockspeed-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
   mkdir -p $OUTDIR/src
   cp ../$SOURCEDIST $OUTDIR/src
   popd
@@ -161,7 +161,7 @@ script: |
     make deploy
     make install DESTDIR=${INSTALLPATH}
     rename 's/-setup\.exe$/-setup-unsigned.exe/' *-setup.exe
-    cp -f sugarchain-*setup*.exe $OUTDIR/
+    cp -f clockspeed-*setup*.exe $OUTDIR/
     cd installed
 
     # BEGIN - DISABLE SHARED
@@ -185,7 +185,7 @@ script: |
   cp -rf contrib/windeploy $BUILD_DIR
   cd $BUILD_DIR/windeploy
   mkdir unsigned
-  cp $OUTDIR/sugarchain-*setup-unsigned.exe unsigned/
+  cp $OUTDIR/clockspeed-*setup-unsigned.exe unsigned/
   find . | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ${OUTDIR}/${DISTNAME}-win-unsigned.tar.gz
   mv ${OUTDIR}/${DISTNAME}-x86_64-*-debug.zip ${OUTDIR}/${DISTNAME}-win64-debug.zip
   mv ${OUTDIR}/${DISTNAME}-i686-*-debug.zip ${OUTDIR}/${DISTNAME}-win32-debug.zip

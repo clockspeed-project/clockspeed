@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
-// Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
+// Copyright (c) 2018-2020 The Clockspeed Yumekawa developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -30,19 +30,19 @@ static constexpr int32_t MAX_OUTBOUND_PEERS_TO_PROTECT_FROM_DISCONNECT = 4;
 /** Timeout for (unprotected) outbound peers to sync to our chainwork, in seconds */
 static constexpr int64_t CHAIN_SYNC_TIMEOUT = 20 * 60; // 20 minutes
 
-// FIXME.SUGAR // SURE?
+// FIXME.CLOCK // SURE?
 // 120x faster than bitcoin
 /** How frequently to check for stale tips, in seconds */
 // (10 * 60 / 120) = 5
-static constexpr int64_t STALE_CHECK_INTERVAL = 5; // seconds // FIXME.SUGAR
+static constexpr int64_t STALE_CHECK_INTERVAL = 5; // seconds // FIXME.CLOCK
 /** How frequently to check for extra outbound peers and disconnect, in seconds */
 // bitcoin:     (600 / 45) = 13.333...
 // litecoin:    (150 / 45) = 3.333...
-// sugarchain:  (5 / 3) = 1.666...
-static constexpr int64_t EXTRA_PEER_CHECK_INTERVAL = 3; // seconds // FIXME.SUGAR
+// clockspeed:  (5 / 3) = 1.666...
+static constexpr int64_t EXTRA_PEER_CHECK_INTERVAL = 3; // seconds // FIXME.CLOCK
 /** Minimum time an outbound-peer-eviction candidate must be connected for, in order to evict, in seconds */
 // (30 / 2) = 15 
-static constexpr int64_t MINIMUM_CONNECT_TIME = 15; // seconds // FIXME.SUGAR
+static constexpr int64_t MINIMUM_CONNECT_TIME = 15; // seconds // FIXME.CLOCK
 
 class PeerLogicValidation : public CValidationInterface, public NetEventsInterface {
 private:

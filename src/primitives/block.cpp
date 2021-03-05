@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
-// Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
+// Copyright (c) 2018-2020 The Clockspeed Yumekawa developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -30,7 +30,7 @@ uint256 CBlockHeaderUncached::GetHash() const
 // yespowerUncached
 uint256 CBlockHeaderUncached::GetPoWHash() const
 {
-    static const yespower_params_t yespower_1_0_sugarchain = {
+    static const yespower_params_t yespower_1_0_clockspeed = {
         .version = YESPOWER_1_0,
         .N = 2048,
         .r = 32,
@@ -40,7 +40,7 @@ uint256 CBlockHeaderUncached::GetPoWHash() const
     uint256 hash;
     CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
     ss << *this;
-    if (yespower_tls((const uint8_t *)&ss[0], ss.size(), &yespower_1_0_sugarchain, (yespower_binary_t *)&hash)) {
+    if (yespower_tls((const uint8_t *)&ss[0], ss.size(), &yespower_1_0_clockspeed, (yespower_binary_t *)&hash)) {
         fprintf(stderr, "Error: CBlockHeaderUncached::GetPoWHash(): failed to compute PoW hash (out of memory?)\n");
         exit(1);
     }

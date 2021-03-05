@@ -228,7 +228,7 @@ Threads
 
 - ThreadMapPort : Universal plug-and-play startup/shutdown
 
-- ThreadSocketHandler : Sends/Receives data from peers on port 34230.
+- ThreadSocketHandler : Sends/Receives data from peers on port 5188.
 
 - ThreadOpenAddedConnections : Opens network connections to added nodes.
 

@@ -1,5 +1,5 @@
 // Copyright (c) 2011-2017 The Bitcoin Core developers
-// Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
+// Copyright (c) 2018-2020 The Clockspeed Yumekawa developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -114,7 +114,7 @@ void WalletModel::updateStatus()
         Q_EMIT encryptionStatusChanged(newEncryptionStatus);
 }
 
-// FIXME.SUGAR // SURE?
+// FIXME.CLOCK // SURE?
 // 120x faster than bitcoin
 void WalletModel::pollBalanceChanged()
 {
@@ -140,7 +140,7 @@ void WalletModel::pollBalanceChanged()
         */
         // END - DEBUG for checking height?
 
-        // FIXME.SUGAR // SURE?
+        // FIXME.CLOCK // SURE?
         // update every blocks >> 12 blocks // 5*12 = 60s
         if(chainActive.Height() - cachedNumBlocks >= 12)
         {

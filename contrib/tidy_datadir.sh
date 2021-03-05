@@ -7,7 +7,7 @@ if [ -d "$1" ]; then
   cd "$1" || exit 1
 else
   echo "Usage: $0 <datadir>" >&2
-  echo "Removes obsolete Sugarchain database files" >&2
+  echo "Removes obsolete Clockspeed database files" >&2
   exit 1
 fi
 
@@ -19,22 +19,22 @@ if [ -f wallet.dat -a -f peers.dat -a -f chainstate/CURRENT -a -f blocks/index/C
 
 case $LEVEL in
   0)
-    echo "Error: no Sugarchain datadir detected."
+    echo "Error: no Clockspeed datadir detected."
     exit 1
     ;;
   1)
-    echo "Detected old Sugarchain datadir (before 0.7)."
+    echo "Detected old Clockspeed datadir (before 0.7)."
     echo "Nothing to do."
     exit 0
     ;;
   2)
-    echo "Detected Sugarchain 0.7 datadir."
+    echo "Detected Clockspeed 0.7 datadir."
     ;;
   3)
-    echo "Detected Sugarchain pre-0.8 datadir."
+    echo "Detected Clockspeed pre-0.8 datadir."
     ;;
   4)
-    echo "Detected Sugarchain 0.8 datadir."
+    echo "Detected Clockspeed 0.8 datadir."
     ;;
 esac
 

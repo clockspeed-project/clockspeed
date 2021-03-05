@@ -1,5 +1,5 @@
 // Copyright (c) 2014-2017 The Bitcoin Core developers
-// Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
+// Copyright (c) 2018-2020 The Clockspeed Yumekawa developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -17,10 +17,10 @@ FTL
 
 BTC = 70 * 60 = "4200s"
 LTC = 35 * 60 = "2100s" 4x faster but 1/2 times
-SUGAR = 70 * 60 / 60 = "70s" = 120x faster but 1/60 times
+CLOCK = 70 * 60 / 60 = "70s" = 120x faster but 1/60 times
 BTC / 60 = (70 * 60) / 60 = 70
 */
-static const int64_t DEFAULT_MAX_TIME_ADJUSTMENT = 70; // FIXME.SUGAR // FTL
+static const int64_t DEFAULT_MAX_TIME_ADJUSTMENT = 70; // FIXME.CLOCK // FTL
 
 class CNetAddr;
 

@@ -135,7 +135,7 @@
         <translation>仅支付全额的%1</translation>
     </message>
     <message>
-        <source>Warning: Invalid Sugarchain address</source>
+        <source>Warning: Invalid Clockspeed address</source>
         <translation>警告：糖链地址无效</translation>
     </message>
     </context>

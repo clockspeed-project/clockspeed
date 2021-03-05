@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
 // Copyright (c) 2016-2018 The Zcash developers - DigiShieldZEC
-// Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
+// Copyright (c) 2018-2020 The Clockspeed Yumekawa developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -54,7 +54,7 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
     unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
 
     // Genesis block
-    if (pindexLast == nullptr) // FIXME.SUGAR // SURE? // <chain.cpp>
+    if (pindexLast == nullptr) // FIXME.CLOCK // SURE? // <chain.cpp>
         return nProofOfWorkLimit;
 
     {
@@ -82,12 +82,12 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
     }
 
     // Check we have enough blocks
-    if (pindexFirst == nullptr) // FIXME.SUGAR // SURE? // <chain.cpp>
+    if (pindexFirst == nullptr) // FIXME.CLOCK // SURE? // <chain.cpp>
         return nProofOfWorkLimit;
 
     arith_uint256 bnAvg {bnTot / params.nPowAveragingWindow};
 
-    // FIXME.SUGAR // SURE?
+    // FIXME.CLOCK // SURE?
     if (params.fPowNoRetargeting && params.fPowAllowMinDifficultyBlocks) {
         // Special difficulty rule for REGTEST: NO RETARGET
         // It fixs test/validation_block_tests/processnewblock_signals_ordering

@@ -1,5 +1,5 @@
 # Copyright (c) 2016 The Bitcoin Core developers
-# Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
+# Copyright (c) 2018-2020 The Clockspeed Yumekawa developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -19,7 +19,7 @@ VERSION=
 commit=false
 
 # GITHUB repo select
-url=https://github.com/sugarchain-project/sugarchain
+url=https://github.com/clockspeed-project/clockspeed
 
 proc=2
 mem=2000
@@ -34,7 +34,7 @@ commitFiles=true
 read -d '' usage <<- EOF
 Usage: $scriptName [-c|u|v|b|s|B|o|h|j|m|] signer version
 
-Run this script from the directory containing the sugarchain, gitian-builder, gitian.sigs.sugar, and sugarchain-detached-sigs.
+Run this script from the directory containing the clockspeed, gitian-builder, gitian.sigs.clock, and clockspeed-detached-sigs.
 
 Arguments:
 signer          GPG signer to sign each build assert file
@@ -42,7 +42,7 @@ version		Version number, commit, or branch to build. If building a commit or bra
 
 Options:
 -c|--commit	Indicate that the version argument is for a commit or branch
--u|--url	Specify the URL of the repository. Default is https://github.com/sugarchain-project/sugarchain
+-u|--url	Specify the URL of the repository. Default is https://github.com/clockspeed-project/clockspeed
 -v|--verify 	Verify the Gitian build
 -b|--build	Do a Gitian build
 -s|--sign	Make signed binaries for Windows and Mac OSX
@@ -233,8 +233,8 @@ echo ${COMMIT}
 if [[ $setup = true ]]
 then
     sudo apt-get install ruby apache2 git apt-cacher-ng python-vm-builder qemu-kvm qemu-utils
-    git clone https://github.com/sugarchain-project/gitian.sigs.sugar.git
-    git clone https://github.com/sugarchain-project/sugarchain-detached-sigs.git
+    git clone https://github.com/clockspeed-project/gitian.sigs.clock.git
+    git clone https://github.com/clockspeed-project/clockspeed-detached-sigs.git
     git clone https://github.com/devrandom/gitian-builder.git
     pushd ./gitian-builder
     if [[ -n "$USE_LXC" ]]
@@ -248,7 +248,7 @@ then
 fi
 
 # Set up build
-pushd ./sugarchain
+pushd ./clockspeed
 git fetch
 git checkout ${COMMIT}
 popd
@@ -257,7 +257,7 @@ popd
 if [[ $build = true ]]
 then
 	# Make output folder
-	mkdir -p ./sugarchain-binaries/${VERSION}
+	mkdir -p ./clockspeed-binaries/${VERSION}
 	
 	# Build Dependencies
 	echo ""
@@ -266,7 +266,7 @@ then
 	pushd ./gitian-builder	
 	mkdir -p inputs
 
-  # FIXME.SUGAR
+  # FIXME.CLOCK
   # wget is too slow so files pre-fixed - osslsigncode and XcodeSDK
   # wget -N -P inputs $osslPatchUrl
   echo 'a8c4e9cafba922f89de0df1f2152e7be286aba73f78505169bc351a7938dd911 inputs/osslsigncode-Backports-to-1.7.1.patch' | sha256sum -c
@@ -275,7 +275,7 @@ then
   # Xcode SDK for macOS build
   echo 'fc65dd34a3665a549cf2dc005c1d13fcead9ba17cadac6dfd0ebc46435729898 inputs/MacOSX10.11.sdk.tar.gz' | sha256sum -c
 
-	make -C ../sugarchain/depends download SOURCES_PATH=`pwd`/cache/common
+	make -C ../clockspeed/depends download SOURCES_PATH=`pwd`/cache/common
 
 	# Linux
 	if [[ $linux = true ]]
@@ -283,9 +283,9 @@ then
             echo ""
 	    echo "Compiling ${VERSION} Linux"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit sugarchain=${COMMIT} --url sugarchain=${url} ../sugarchain/contrib/gitian-descriptors/gitian-linux.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs.sugar/ ../sugarchain/contrib/gitian-descriptors/gitian-linux.yml
-	    mv build/out/sugarchain-*.tar.gz build/out/src/sugarchain-*.tar.gz ../sugarchain-binaries/${VERSION}
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit clockspeed=${COMMIT} --url clockspeed=${url} ../clockspeed/contrib/gitian-descriptors/gitian-linux.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs.clock/ ../clockspeed/contrib/gitian-descriptors/gitian-linux.yml
+	    mv build/out/clockspeed-*.tar.gz build/out/src/clockspeed-*.tar.gz ../clockspeed-binaries/${VERSION}
 	fi
 	# Windows
 	if [[ $windows = true ]]
@@ -293,10 +293,10 @@ then
 	    echo ""
 	    echo "Compiling ${VERSION} Windows"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit sugarchain=${COMMIT} --url sugarchain=${url} ../sugarchain/contrib/gitian-descriptors/gitian-win.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs.sugar/ ../sugarchain/contrib/gitian-descriptors/gitian-win.yml
-	    mv build/out/sugarchain-*-win-unsigned.tar.gz inputs/sugarchain-win-unsigned.tar.gz
-	    mv build/out/sugarchain-*.zip build/out/sugarchain-*.exe ../sugarchain-binaries/${VERSION}
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit clockspeed=${COMMIT} --url clockspeed=${url} ../clockspeed/contrib/gitian-descriptors/gitian-win.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs.clock/ ../clockspeed/contrib/gitian-descriptors/gitian-win.yml
+	    mv build/out/clockspeed-*-win-unsigned.tar.gz inputs/clockspeed-win-unsigned.tar.gz
+	    mv build/out/clockspeed-*.zip build/out/clockspeed-*.exe ../clockspeed-binaries/${VERSION}
 	fi
 	# Mac OSX
 	if [[ $osx = true ]]
@@ -304,10 +304,10 @@ then
 	    echo ""
 	    echo "Compiling ${VERSION} Mac OSX"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit sugarchain=${COMMIT} --url sugarchain=${url} ../sugarchain/contrib/gitian-descriptors/gitian-osx.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs.sugar/ ../sugarchain/contrib/gitian-descriptors/gitian-osx.yml
-	    mv build/out/sugarchain-*-osx-unsigned.tar.gz inputs/sugarchain-osx-unsigned.tar.gz
-	    mv build/out/sugarchain-*.tar.gz build/out/sugarchain-*.dmg ../sugarchain-binaries/${VERSION}
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit clockspeed=${COMMIT} --url clockspeed=${url} ../clockspeed/contrib/gitian-descriptors/gitian-osx.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs.clock/ ../clockspeed/contrib/gitian-descriptors/gitian-osx.yml
+	    mv build/out/clockspeed-*-osx-unsigned.tar.gz inputs/clockspeed-osx-unsigned.tar.gz
+	    mv build/out/clockspeed-*.tar.gz build/out/clockspeed-*.dmg ../clockspeed-binaries/${VERSION}
 	fi
 	popd
 
@@ -334,27 +334,27 @@ then
 	echo ""
 	echo "Verifying v${VERSION} Linux"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs.sugar/ -r ${VERSION}-linux ../sugarchain/contrib/gitian-descriptors/gitian-linux.yml
+	./bin/gverify -v -d ../gitian.sigs.clock/ -r ${VERSION}-linux ../clockspeed/contrib/gitian-descriptors/gitian-linux.yml
 	# Windows
 	echo ""
 	echo "Verifying v${VERSION} Windows"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs.sugar/ -r ${VERSION}-win-unsigned ../sugarchain/contrib/gitian-descriptors/gitian-win.yml
+	./bin/gverify -v -d ../gitian.sigs.clock/ -r ${VERSION}-win-unsigned ../clockspeed/contrib/gitian-descriptors/gitian-win.yml
 	# Mac OSX	
 	echo ""
 	echo "Verifying v${VERSION} Mac OSX"
 	echo ""	
-	./bin/gverify -v -d ../gitian.sigs.sugar/ -r ${VERSION}-osx-unsigned ../sugarchain/contrib/gitian-descriptors/gitian-osx.yml
+	./bin/gverify -v -d ../gitian.sigs.clock/ -r ${VERSION}-osx-unsigned ../clockspeed/contrib/gitian-descriptors/gitian-osx.yml
 	# Signed Windows
 	echo ""
 	echo "Verifying v${VERSION} Signed Windows"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs.sugar/ -r ${VERSION}-osx-signed ../sugarchain/contrib/gitian-descriptors/gitian-osx-signer.yml
+	./bin/gverify -v -d ../gitian.sigs.clock/ -r ${VERSION}-osx-signed ../clockspeed/contrib/gitian-descriptors/gitian-osx-signer.yml
 	# Signed Mac OSX
 	echo ""
 	echo "Verifying v${VERSION} Signed Mac OSX"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs.sugar/ -r ${VERSION}-osx-signed ../sugarchain/contrib/gitian-descriptors/gitian-osx-signer.yml	
+	./bin/gverify -v -d ../gitian.sigs.clock/ -r ${VERSION}-osx-signed ../clockspeed/contrib/gitian-descriptors/gitian-osx-signer.yml	
 	popd
 fi
 
@@ -369,10 +369,10 @@ then
 	    echo ""
 	    echo "Signing ${VERSION} Windows"
 	    echo ""
-	    ./bin/gbuild -i --commit signature=${COMMIT} ../sugarchain/contrib/gitian-descriptors/gitian-win-signer.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs.sugar/ ../sugarchain/contrib/gitian-descriptors/gitian-win-signer.yml
-	    mv build/out/sugarchain-*win64-setup.exe ../sugarchain-binaries/${VERSION}
-	    mv build/out/sugarchain-*win32-setup.exe ../sugarchain-binaries/${VERSION}
+	    ./bin/gbuild -i --commit signature=${COMMIT} ../clockspeed/contrib/gitian-descriptors/gitian-win-signer.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs.clock/ ../clockspeed/contrib/gitian-descriptors/gitian-win-signer.yml
+	    mv build/out/clockspeed-*win64-setup.exe ../clockspeed-binaries/${VERSION}
+	    mv build/out/clockspeed-*win32-setup.exe ../clockspeed-binaries/${VERSION}
 	fi
 	# Sign Mac OSX
 	if [[ $osx = true ]]
@@ -380,9 +380,9 @@ then
 	    echo ""
 	    echo "Signing ${VERSION} Mac OSX"
 	    echo ""
-	    ./bin/gbuild -i --commit signature=${COMMIT} ../sugarchain/contrib/gitian-descriptors/gitian-osx-signer.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs.sugar/ ../sugarchain/contrib/gitian-descriptors/gitian-osx-signer.yml
-	    mv build/out/sugarchain-osx-signed.dmg ../sugarchain-binaries/${VERSION}/sugarchain-${VERSION}-osx.dmg
+	    ./bin/gbuild -i --commit signature=${COMMIT} ../clockspeed/contrib/gitian-descriptors/gitian-osx-signer.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs.clock/ ../clockspeed/contrib/gitian-descriptors/gitian-osx-signer.yml
+	    mv build/out/clockspeed-osx-signed.dmg ../clockspeed-binaries/${VERSION}/clockspeed-${VERSION}-osx.dmg
 	fi
 	popd
 

@@ -55,10 +55,10 @@ static int AppInitRawTx(int argc, char* argv[])
     if (argc<2 || gArgs.IsArgSet("-?") || gArgs.IsArgSet("-h") || gArgs.IsArgSet("-help"))
     {
         // First part of help message is specific to this utility
-        std::string strUsage = strprintf(_("%s sugarchain-tx utility version"), _(PACKAGE_NAME)) + " " + FormatFullVersion() + "\n\n" +
+        std::string strUsage = strprintf(_("%s clockspeed-tx utility version"), _(PACKAGE_NAME)) + " " + FormatFullVersion() + "\n\n" +
             _("Usage:") + "\n" +
-              "  sugarchain-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded sugarchain transaction") + "\n" +
-              "  sugarchain-tx [options] -create [commands]   " + _("Create hex-encoded sugarchain transaction") + "\n" +
+              "  clockspeed-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded clockspeed transaction") + "\n" +
+              "  clockspeed-tx [options] -create [commands]   " + _("Create hex-encoded clockspeed transaction") + "\n" +
               "\n";
 
         fprintf(stdout, "%s", strUsage.c_str());

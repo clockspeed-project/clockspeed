@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
-// Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
+// Copyright (c) 2018-2020 The Clockspeed Yumekawa developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -182,7 +182,7 @@ void Shutdown()
     /// for example if the data directory was found to be locked.
     /// Be sure that anything that writes files or flushes caches only does this if the respective
     /// module was initialized.
-    RenameThread("sugarchain-shutoff");
+    RenameThread("clockspeed-shutoff");
     mempool.AddTransactionsUpdated(1);
 
     StopHTTPRPC();
@@ -475,7 +475,7 @@ std::string HelpMessage(HelpMessageMode mode)
     strUsage += HelpMessageOpt("-maxtxfee=<amt>", strprintf(_("Maximum total fees (in %s) to use in a single wallet transaction or raw transaction; setting this too low may abort large transactions (default: %s)"),
         CURRENCY_UNIT, FormatMoney(DEFAULT_TRANSACTION_MAXFEE)));
     strUsage += HelpMessageOpt("-printtoconsole", _("Send trace/debug info to console instead of debug.log file"));
-    strUsage += HelpMessageOpt("-prunedebuglogfile", _("Prune (limit) filesize of debug.log")); // FIXME.SUGAR // prune debug.log
+    strUsage += HelpMessageOpt("-prunedebuglogfile", _("Prune (limit) filesize of debug.log")); // FIXME.CLOCK // prune debug.log
     if (showDebug)
     {
         strUsage += HelpMessageOpt("-printpriority", strprintf("Log transaction fee per kB when mining blocks (default: %u)", DEFAULT_PRINTPRIORITY));
@@ -525,12 +525,12 @@ std::string HelpMessage(HelpMessageMode mode)
     return strUsage;
 }
 
-// FIXME.SUGAR
-// QT About Sugarchain
+// FIXME.CLOCK
+// QT About Clockspeed
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/sugarchain-project/sugarchain>";
-    const std::string URL_WEBSITE = "<https://sugarchain.org>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/clockspeed-project/clockspeed>";
+    const std::string URL_WEBSITE = "<https://clockspeed.org>";
 
     // BEGIN - Adding Additional CopyrightHolders (1/2)
     const std::string Copyright_1 = strprintf(_("Copyright (C) %i-%i"), 2009, 2010) + " " + "Satoshi Nakamoto";
@@ -648,7 +648,7 @@ void CleanupBlockRevFiles()
 void ThreadImport(std::vector<fs::path> vImportFiles)
 {
     const CChainParams& chainparams = Params();
-    RenameThread("sugarchain-loadblk");
+    RenameThread("clockspeed-loadblk");
 
     {
     CImportingNow imp;
@@ -830,7 +830,7 @@ static std::string ResolveErrMsg(const char * const optname, const std::string& 
 void InitLogging()
 {
     fPrintToConsole = gArgs.GetBoolArg("-printtoconsole", false);
-    fPruneDebugLog = gArgs.GetBoolArg("-prunedebuglogfile", false); // FIXME.SUGAR // prune debug.log
+    fPruneDebugLog = gArgs.GetBoolArg("-prunedebuglogfile", false); // FIXME.CLOCK // prune debug.log
     fLogTimestamps = gArgs.GetBoolArg("-logtimestamps", DEFAULT_LOGTIMESTAMPS);
     fLogTimeMicros = gArgs.GetBoolArg("-logtimemicros", DEFAULT_LOGTIMEMICROS);
     fLogIPs = gArgs.GetBoolArg("-logips", DEFAULT_LOGIPS);
@@ -1249,9 +1249,9 @@ bool AppInitMain()
     // Warn about relative -datadir path.
     if (gArgs.IsArgSet("-datadir") && !fs::path(gArgs.GetArg("-datadir", "")).is_absolute()) {
         LogPrintf("Warning: relative datadir option '%s' specified, which will be interpreted relative to the "
-                  "current working directory '%s'. This is fragile, because if sugarchain is started in the future "
+                  "current working directory '%s'. This is fragile, because if clockspeed is started in the future "
                   "from a different location, it will be unable to locate the current data files. There could "
-                  "also be data loss if sugarchain is started while in a temporary directory.\n",
+                  "also be data loss if clockspeed is started while in a temporary directory.\n",
             gArgs.GetArg("-datadir", ""), fs::current_path().string());
     }
 
