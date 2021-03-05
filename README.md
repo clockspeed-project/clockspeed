@@ -1,18 +1,7 @@
-Clockspeed Yumekawa
+Clockspeed
 ===================
 [![Build Status](https://travis-ci.org/clockspeed-project/clockspeed.svg?branch=master-v0.16.3)](https://travis-ci.org/clockspeed-project/clockspeed)
 ![GitHub All Releases](https://img.shields.io/github/downloads/clockspeed-project/clockspeed/total)
-
-https://clockspeed.org
-
-
-The Meaning of Yumekawa
------------------------
-Clockspeed's first node software is called `Yumekawa (夢川)`. It can be translated in some ways.
-- "Yume (夢)" means dream and "Kawa (川)" means river. So its `Dream River` in japanese.
-- The second letter "Kawa" stands for "Kawaii (可愛い)". In this case the meaning is `Dreamy Cute`.
-- Also Yumekawa is replaces the word `Core` (ie: Bitcoin Core). We think it sounds a bit centralized.
-
 
 License
 -------
@@ -22,8 +11,7 @@ information or see https://opensource.org/licenses/MIT.
 - Copyright (c) 2009-2018 The Bitcoin Core developers
 - Copyright (c) 2013-2019 Alexander Peslyak - Yespower 1.0.1
 - Copyright (c) 2016-2018 The Zcash developers - DigiShieldZEC
-- Copyright (c) 2018-2020 The Clockspeed Yumekawa developers
-
+- Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
 
 Minimum Requirement
 -------------------
