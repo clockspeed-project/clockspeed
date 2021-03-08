@@ -1,7 +1,7 @@
 #sudo: required
 dist: trusty
 os: linux
-language: minimal
+language: shell
 cache:
   directories:
   - depends/built
@@ -26,7 +26,8 @@ env:
     - YESPOWER_OPTION="-fPIE -Wall -O2 -fomit-frame-pointer"
     - YESPOWER_MSSE2_32BIT="-msse2"
     - WIN_BITCOIN_CONFIG="--disable-shared"
-  matrix:
+  #matrix:
+  jobs:
 # ARM
     - >
       HOST=arm-linux-gnueabihf
